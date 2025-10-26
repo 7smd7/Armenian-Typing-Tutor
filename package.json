@@ -1,14 +1,17 @@
 {
     "name": "armenian-typing-tutor",
     "private": true,
-    "version": "0.0.0",
+    "version": "1.0.0",
+    "description": "An interactive typing tutor application for learning the Armenian keyboard layout",
+    "author": "7smd7",
     "type": "module",
     "main": "main.cjs",
     "scripts": {
         "start": "npm run build && electron .",
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "dist:mac": "npm run build && electron-builder --mac"
     },
     "dependencies": {
         "react": "^19.2.0",
@@ -23,9 +26,28 @@
         "vite": "^6.2.0"
     },
     "build": {
+        "appId": "com.armeniantyping.tutor",
+        "productName": "Armenian Typing Tutor",
+        "files": [
+            "dist/**/*",
+            "main.cjs",
+            "package.json"
+        ],
+        "directories": {
+            "output": "release"
+        },
         "mac": {
-            "target": "dmg",
-            "icon": "build/icon.icns"
+            "category": "public.app-category.education",
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
+            ],
+            "icon": "icon.icns"
         }
     }
 }

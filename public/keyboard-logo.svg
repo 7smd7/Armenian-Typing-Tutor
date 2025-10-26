@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="#4F46E5"/>
+  <circle cx="100" cy="100" r="85" fill="#6366F1"/>
+  
+  <!-- Keyboard keys -->
+  <!-- Top row -->
+  <rect x="45" y="60" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="68" y="60" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="91" y="60" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="114" y="60" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="137" y="60" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  
+  <!-- Middle row -->
+  <rect x="50" y="82" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="73" y="82" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="96" y="82" width="18" height="18" rx="3" fill="white" opacity="0.95"/>
+  <rect x="119" y="82" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="142" y="82" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  
+  <!-- Bottom row -->
+  <rect x="55" y="104" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="78" y="104" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="101" y="104" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  <rect x="124" y="104" width="18" height="18" rx="3" fill="white" opacity="0.9"/>
+  
+  <!-- Space bar -->
+  <rect x="65" y="126" width="70" height="14" rx="3" fill="white" opacity="0.95"/>
+  
+  <!-- Armenian letter Ա (highlighted key in center) -->
+  <text x="105" y="96" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4F46E5" text-anchor="middle">Ա</text>
+</svg>

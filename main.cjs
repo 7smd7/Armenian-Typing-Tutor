@@ -1,17 +1,35 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 
+const isDev = process.env.NODE_ENV === "development";
+
 const createWindow = () => {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
+        title: "Armenian Typing Tutor",
         webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
+            nodeIntegration: true,
+            contextIsolation: false,
         },
     });
 
-    // Load your built Vite app from the dist directory
-    win.loadFile(path.join(__dirname, "dist/index.html"));
+    if (isDev) {
+        // In development, load from Vite dev server
+        win.loadURL("http://localhost:5173");
+        win.webContents.openDevTools();
+    } else {
+        // In production, load the built files
+        win.loadFile(path.join(__dirname, "dist/index.html"));
+    }
+
+    // Handle navigation errors
+    win.webContents.on(
+        "did-fail-load",
+        (event, errorCode, errorDescription) => {
+            console.error("Failed to load:", errorCode, errorDescription);
+        }
+    );
 };
 
 app.whenReady().then(() => {

@@ -12,6 +12,8 @@ import Keyboard from "./components/Keyboard";
 import CharacterDisplay from "./components/CharacterDisplay";
 import LessonMenu from "./components/LessonMenu";
 import VoiceToggle from "./components/VoiceToggle";
+import ProgressDashboard from "./components/ProgressDashboard";
+import { getProgressTracker } from "./progressTracker";
 
 const App: React.FC = () => {
     const [lessonIndex, setLessonIndex] = useState(0);
@@ -22,7 +24,13 @@ const App: React.FC = () => {
         correct: boolean;
     } | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showProgress, setShowProgress] = useState(false);
     const [voiceMode, setVoiceMode] = useState<"human" | "computer">("human");
+
+    // Track exercise stats
+    const [exerciseStartTime, setExerciseStartTime] = useState(Date.now());
+    const [mistakes, setMistakes] = useState<Record<string, number>>({});
+    const [correctChars, setCorrectChars] = useState(0);
 
     const keyMap = useMemo(() => {
         const map = new Map<string, string>(); // Map<armenianChar, keyCode>
@@ -96,16 +104,47 @@ const App: React.FC = () => {
                 setExerciseIndex(eIdx);
                 setCharIndex(0);
                 setLastPressed(null);
+                // Reset exercise tracking
+                setExerciseStartTime(Date.now());
+                setMistakes({});
+                setCorrectChars(0);
             }
         }
     };
 
     const nextExercise = () => {
+        // Record completed exercise
+        recordExerciseCompletion();
+
         if (exerciseIndex < currentLesson.exercises.length - 1) {
             goToExercise(lessonIndex, exerciseIndex + 1);
         } else if (lessonIndex < LESSONS.length - 1) {
             goToExercise(lessonIndex + 1, 0);
         }
+    };
+
+    const recordExerciseCompletion = () => {
+        const timeSpent = (Date.now() - exerciseStartTime) / 1000; // seconds
+        const totalChars = currentLessonText.length;
+        const incorrectChars = Object.values(mistakes).reduce(
+            (sum: number, count: number) => sum + count,
+            0
+        );
+
+        const tracker = getProgressTracker();
+        tracker.recordExerciseAttempt(
+            lessonIndex + 1, // lessonId (1-indexed)
+            currentLesson.title,
+            `exercise-${exerciseIndex}`,
+            currentExercise.name,
+            {
+                totalCharacters: totalChars,
+                correctCharacters: correctChars,
+                incorrectCharacters: incorrectChars,
+                timeSpent,
+                mistakes,
+            }
+        );
     };
 
     const prevExercise = () => {
@@ -136,12 +175,19 @@ const App: React.FC = () => {
             setLastPressed({ code: e.code, correct });
 
             if (correct) {
+                setCorrectChars((prev) => prev + 1);
                 playAudio(currentLetterInfo);
                 if (charIndex + 1 >= currentLessonText.length) {
                     setTimeout(nextExercise, 500);
                 } else {
                     setCharIndex((prev) => prev + 1);
                 }
+            } else {
+                // Track mistake
+                setMistakes((prev) => ({
+                    ...prev,
+                    [currentArmenianChar]: (prev[currentArmenianChar] || 0) + 1,
+                }));
             }
         };
 
@@ -182,6 +228,28 @@ const App: React.FC = () => {
         lessonIndex === LESSONS.length - 1 &&
         exerciseIndex === LESSONS[lessonIndex].exercises.length - 1;
 
+    // Show progress dashboard
+    if (showProgress) {
+        return (
+            <div className='min-h-screen bg-gray-900 text-gray-200'>
+                <div className='p-4'>
+                    <button
+                        onClick={() => setShowProgress(false)}
+                        className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mb-4'
+                    >
+                        ← Back to Lessons
+                    </button>
+                </div>
+                <ProgressDashboard
+                    onSelectLesson={(lessonId) => {
+                        goToExercise(lessonId - 1, 0);
+                        setShowProgress(false);
+                    }}
+                />
+            </div>
+        );
+    }
+
     return (
         <div className='min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8'>
             <LessonMenu
@@ -216,6 +284,12 @@ const App: React.FC = () => {
                             }
                         />
                         <div>
+                            <button
+                                onClick={() => setShowProgress(true)}
+                                className='bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2'
+                            >
+                                Progress
+                            </button>
                             <button
                                 onClick={() => setIsMenuOpen(true)}
                                 className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2'

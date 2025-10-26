@@ -87,6 +87,24 @@ Each lesson includes:
 - **Packaging**: electron-builder
 - **Icons**: Custom SVG icons converted to .icns
 
+## 🌐 Web (Serverless) Deployment
+
+This project can also run as a serverless web app (no Electron) — the React renderer is fully client-side and uses localStorage for progress persistence.
+
+- A GitHub Actions workflow is included to automatically build and publish the site to GitHub Pages when you push to `main`.
+- The site will be available at: `https://7smd7.github.io/Armenian-Typing-Tutor/` once the workflow completes (it may take a minute).
+
+To build & deploy locally instead of waiting for Actions, you can run:
+
+```bash
+npm run build
+npm run deploy
+```
+
+Notes:
+- The web build does not include Electron-specific native features. The `main.cjs` file is retained for desktop packaging, but it is not used by the web site.
+- Use `npm run dev` to run a local development server.
+
 ## 📊 Progress Tracking
 
 Your learning progress is automatically saved locally, including:

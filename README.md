@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="screenshot.jpeg" alt="Armenian Typing Tutor Screenshot" width="800"/>
+  <img src="public/screenshot.jpeg" alt="Armenian Typing Tutor Screenshot" width="800"/>
 </div>
 
 # 🇦🇲 Armenian Typing Tutor

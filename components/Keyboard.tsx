@@ -17,7 +17,9 @@ const Key: React.FC<{
     fingerToHighlight: Finger | null;
 }> = ({ keyInfo, isNext, isLastPressed, wasCorrect, fingerToHighlight }) => {
     if (!keyInfo) {
-        return <div className='w-10 h-10 rounded-lg bg-gray-800'></div>;
+        return (
+            <div className='w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 rounded-lg bg-gray-800'></div>
+        );
     }
 
     const getBackgroundColor = () => {
@@ -32,15 +34,15 @@ const Key: React.FC<{
 
     const getWidthClass = () => {
         if (keyInfo.code === "Tab" || keyInfo.code === "Backspace") {
-            return "w-16";
+            return "w-10 sm:w-12 md:w-16";
         }
         if (keyInfo.code === "CapsLock" || keyInfo.code === "Enter") {
-            return "w-20";
+            return "w-12 sm:w-16 md:w-20";
         }
         if (keyInfo.code === "ShiftLeft" || keyInfo.code === "ShiftRight") {
-            return "w-24";
+            return "w-14 sm:w-18 md:w-24";
         }
-        return "w-10";
+        return "w-6 sm:w-8 md:w-10";
     };
 
     const widthClass = getWidthClass();
@@ -49,11 +51,11 @@ const Key: React.FC<{
 
     return (
         <div
-            className={`relative flex items-center justify-center h-10 ${widthClass} rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-xl select-none ${getBackgroundColor()}`}
+            className={`relative flex items-center justify-center h-6 sm:h-8 md:h-10 ${widthClass} rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-sm sm:text-base md:text-xl select-none ${getBackgroundColor()}`}
         >
             {keyInfo.armenian}
             {isHomeKey && (
-                <div className='absolute bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-gray-500 rounded-sm'></div>
+                <div className='absolute bottom-0.5 sm:bottom-1 md:bottom-1.5 left-1/2 -translate-x-1/2 w-2 sm:w-3 md:w-4 h-0.5 bg-gray-500 rounded-sm'></div>
             )}
             {isNext && fingerToHighlight && (
                 <FingerOverlay finger={fingerToHighlight} />
@@ -69,13 +71,13 @@ const Keyboard: React.FC<KeyboardProps> = ({
     fingerToHighlight,
 }) => {
     return (
-        <div className='p-3 bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl mx-auto'>
+        <div className='p-2 sm:p-3 bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl mx-auto'>
             {/* Keyboard rows */}
             {layout.map((row, rowIndex) => (
                 <div
                     key={rowIndex}
-                    className={`flex justify-center items-center space-x-1${
-                        rowIndex < layout.length - 1 ? " mb-1" : ""
+                    className={`flex justify-center items-center space-x-0.5 sm:space-x-1${
+                        rowIndex < layout.length - 1 ? " mb-0.5 sm:mb-1" : ""
                     }`}
                 >
                     {row.map((keyInfo, keyIndex) => (
@@ -97,9 +99,9 @@ const Keyboard: React.FC<KeyboardProps> = ({
                 </div>
             ))}
 
-            <div className='flex justify-center items-center mt-1'>
+            <div className='flex justify-center items-center mt-0.5 sm:mt-1'>
                 <div
-                    className={`relative flex items-center justify-center h-10 w-96 rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-xl select-none ${
+                    className={`relative flex items-center justify-center h-6 sm:h-8 md:h-10 w-32 sm:w-48 md:w-96 rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-sm sm:text-base md:text-xl select-none ${
                         nextKeyCode === "Space"
                             ? "bg-sky-600"
                             : "bg-gray-700 hover:bg-gray-600"

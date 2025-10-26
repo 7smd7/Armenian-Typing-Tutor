@@ -209,7 +209,7 @@ const App: React.FC = () => {
 
     const renderLessonText = () => {
         return (
-            <p className='font-mono text-3xl md:text-4xl tracking-widest text-left p-4 bg-gray-800 rounded-lg whitespace-pre-wrap'>
+            <p className='font-mono text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-wider sm:tracking-widest text-center sm:text-left p-3 sm:p-4 bg-gray-800 rounded-lg whitespace-pre-wrap overflow-x-auto'>
                 <span className='text-gray-500'>
                     {currentLessonText.substring(0, charIndex)}
                 </span>
@@ -251,7 +251,7 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className='min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8'>
+        <div className='min-h-screen bg-gray-900 text-gray-200 flex flex-col items-center justify-start sm:justify-center p-2 sm:p-4 lg:p-8'>
             <LessonMenu
                 isOpen={isMenuOpen}
                 onClose={() => setIsMenuOpen(false)}
@@ -262,44 +262,56 @@ const App: React.FC = () => {
             />
 
             <div className='w-full max-w-7xl mx-auto flex flex-col items-center'>
-                <header className='text-center mb-8'>
-                    <h1 className='text-4xl sm:text-5xl font-bold text-sky-400'>
+                <header className='text-center mb-4 sm:mb-6 md:mb-8'>
+                    <h1 className='text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-sky-400'>
                         Armenian Typing Tutor
                     </h1>
-                    <p className='text-lg text-gray-400 mt-2'>
+                    <p className='text-sm sm:text-base md:text-lg text-gray-400 mt-1 sm:mt-2 px-2'>
                         Learn the Armenian alphabet by typing. Press the keys to
                         hear the sounds.
                     </p>
+                    {/* Mobile instruction */}
+                    <div className='sm:hidden mt-2 text-xs text-gray-500 bg-gray-800 rounded p-2 mx-2'>
+                        💡 Tip: Use an external keyboard for the best experience
+                        on mobile devices
+                    </div>
                 </header>
 
                 <div className='w-full max-w-5xl mb-6'>
-                    <div className='flex justify-between items-center mb-2 flex-wrap gap-2'>
-                        <h2 className='text-lg sm:text-xl font-semibold'>{`${currentLesson.title}: ${currentExercise.name}`}</h2>
-                        <VoiceToggle
-                            voiceMode={voiceMode}
-                            onToggle={() =>
-                                setVoiceMode((prev) =>
-                                    prev === "human" ? "computer" : "human"
-                                )
-                            }
-                        />
-                        <div>
+                    {/* Mobile-first header layout */}
+                    <div className='mb-4'>
+                        <h2 className='text-base sm:text-lg md:text-xl font-semibold mb-3 text-center'>{`${currentLesson.title}: ${currentExercise.name}`}</h2>
+
+                        {/* Voice toggle - centered on mobile */}
+                        <div className='flex justify-center mb-4'>
+                            <VoiceToggle
+                                voiceMode={voiceMode}
+                                onToggle={() =>
+                                    setVoiceMode((prev) =>
+                                        prev === "human" ? "computer" : "human"
+                                    )
+                                }
+                            />
+                        </div>
+
+                        {/* Mobile-friendly button grid */}
+                        <div className='grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 justify-center'>
                             <button
                                 onClick={() => setShowProgress(true)}
-                                className='bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2'
+                                className='bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors'
                             >
                                 Progress
                             </button>
                             <button
                                 onClick={() => setIsMenuOpen(true)}
-                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2'
+                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors'
                             >
                                 Lessons
                             </button>
                             <button
                                 onClick={prevExercise}
                                 disabled={isFirstExercise}
-                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2 disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed'
+                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors disabled:bg-gray-800 disabled:text-gray-500 disabled:cursor-not-allowed'
                             >
                                 Previous
                             </button>
@@ -307,14 +319,14 @@ const App: React.FC = () => {
                                 onClick={() =>
                                     goToExercise(lessonIndex, exerciseIndex)
                                 }
-                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors mr-2'
+                                className='bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors'
                             >
                                 Reset
                             </button>
                             <button
                                 onClick={nextExercise}
                                 disabled={isLastExercise}
-                                className='bg-sky-700 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition-colors disabled:bg-sky-900 disabled:text-gray-400 disabled:cursor-not-allowed'
+                                className='bg-sky-700 hover:bg-sky-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors disabled:bg-sky-900 disabled:text-gray-400 disabled:cursor-not-allowed col-span-2 sm:col-span-1'
                             >
                                 Next
                             </button>
@@ -328,7 +340,7 @@ const App: React.FC = () => {
                     letterInfo={currentLetterInfo}
                     onPlaySound={() => playAudio(currentLetterInfo)}
                 />
-                <div className='w-full max-w-7xl mx-auto flex justify-center items-center gap-x-2 lg:gap-x-4 mt-8'>
+                <div className='w-full max-w-7xl mx-auto flex justify-center items-center gap-x-2 lg:gap-x-4 mt-4 sm:mt-6 md:mt-8'>
                     <div className='flex-grow'>
                         <Keyboard
                             layout={KEYBOARD_LAYOUT}

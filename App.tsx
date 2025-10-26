@@ -186,29 +186,31 @@ const App: React.FC = () => {
     }, []);
 
     // Handle mobile input
-    const handleMobileInput = (inputValue: string) => {
-        if (charIndex >= currentLessonText.length || !inputValue) return;
+    const handleMobileInput = (enteredChar: string) => {
+        if (charIndex >= currentLessonText.length || !enteredChar) return;
 
-        const enteredChar = inputValue.slice(-1); // Get the last character
         const correct = enteredChar === currentArmenianChar;
 
         setLastPressed({ code: enteredChar, correct });
+
+        // Show the typed letter briefly
+        setMobileInput(enteredChar);
 
         if (correct) {
             setCorrectChars((prev) => prev + 1);
             setMobileInputStatus("correct");
             playAudio(currentLetterInfo);
 
-            // Clear input and feedback after a short delay
+            // Clear input after showing the letter briefly
             setTimeout(() => {
                 setMobileInput("");
                 setMobileInputStatus("idle");
-            }, 300);
+            }, 200); // Show for 200ms
 
             if (charIndex + 1 >= currentLessonText.length) {
                 setTimeout(nextExercise, 800);
             } else {
-                setTimeout(() => setCharIndex((prev) => prev + 1), 300);
+                setTimeout(() => setCharIndex((prev) => prev + 1), 200);
             }
         } else {
             // Track mistake
@@ -218,11 +220,11 @@ const App: React.FC = () => {
             }));
             setMobileInputStatus("incorrect");
 
-            // Clear input and feedback after a short delay
+            // Clear input after showing the letter briefly
             setTimeout(() => {
                 setMobileInput("");
                 setMobileInputStatus("idle");
-            }, 500);
+            }, 300); // Show for 300ms for mistakes
         }
     };
 
@@ -334,11 +336,6 @@ const App: React.FC = () => {
                         Learn the Armenian alphabet by typing. Press the keys to
                         hear the sounds.
                     </p>
-                    {/* Mobile instruction */}
-                    <div className='sm:hidden mt-2 text-xs text-gray-500 bg-gray-800 rounded p-2 mx-2'>
-                        � Mobile typing supported! Install Armenian keyboard for
-                        best experience
-                    </div>
                 </header>
 
                 <div className='w-full max-w-5xl mb-6'>
@@ -400,10 +397,13 @@ const App: React.FC = () => {
                     {renderLessonText()}
                 </div>
 
-                <CharacterDisplay
-                    letterInfo={currentLetterInfo}
-                    onPlaySound={() => playAudio(currentLetterInfo)}
-                />
+                {/* Character Display - Hidden on mobile (integrated into mobile typing interface) */}
+                {!isMobile && (
+                    <CharacterDisplay
+                        letterInfo={currentLetterInfo}
+                        onPlaySound={() => playAudio(currentLetterInfo)}
+                    />
+                )}
 
                 {/* Desktop Keyboard - Hidden on mobile */}
                 {!isMobile && (
@@ -431,21 +431,57 @@ const App: React.FC = () => {
                                 keyboard
                             </p>
                             <div className='flex flex-col items-center space-y-4'>
-                                <div className='text-2xl font-bold text-white bg-gray-700 rounded-lg px-4 py-2 min-w-[80px] text-center'>
-                                    Expected:{" "}
-                                    <span className='text-sky-400'>
-                                        {currentArmenianChar === " "
-                                            ? "Space"
-                                            : currentArmenianChar}
-                                    </span>
-                                </div>
+                                {/* Merged Character Display for Mobile */}
+                                {currentLetterInfo && (
+                                    <div className='flex flex-col items-center justify-center bg-gray-700 rounded-xl shadow-lg w-full max-w-xs h-20 sm:h-24 p-4'>
+                                        <div className='text-3xl sm:text-4xl font-bold text-sky-400 mb-2'>
+                                            {currentLetterInfo.armenian}
+                                        </div>
+                                        <div className='flex space-x-2 items-center'>
+                                            <button
+                                                onClick={() =>
+                                                    playAudio(currentLetterInfo)
+                                                }
+                                                className='p-1.5 rounded-full bg-gray-600 hover:bg-sky-600 transition-colors focus:outline-none focus:ring-2 focus:ring-sky-500'
+                                                aria-label='Play sound'
+                                            >
+                                                <svg
+                                                    xmlns='http://www.w3.org/2000/svg'
+                                                    width='20'
+                                                    height='20'
+                                                    viewBox='0 0 24 24'
+                                                    fill='none'
+                                                    stroke='currentColor'
+                                                    strokeWidth='2'
+                                                    strokeLinecap='round'
+                                                    strokeLinejoin='round'
+                                                    className='text-white'
+                                                >
+                                                    <polygon points='11 5 6 9 2 9 2 15 6 15 11 19 11 5'></polygon>
+                                                    <path d='M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07'></path>
+                                                </svg>
+                                            </button>
+                                            <div className='text-lg sm:text-xl text-gray-400'>
+                                                {
+                                                    currentLetterInfo.transliteration
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                                 <input
                                     type='text'
                                     value={mobileInput}
                                     onChange={(e) => {
                                         if (mobileInputStatus === "idle") {
-                                            setMobileInput(e.target.value);
-                                            handleMobileInput(e.target.value);
+                                            const newValue = e.target.value;
+
+                                            // If user typed something
+                                            if (newValue.length > 0) {
+                                                const enteredChar =
+                                                    newValue.slice(-1);
+                                                handleMobileInput(enteredChar);
+                                            }
                                         }
                                     }}
                                     onKeyDown={(e) => {
@@ -457,6 +493,11 @@ const App: React.FC = () => {
                                         }
                                     }}
                                     placeholder='Type here...'
+                                    autoCapitalize='none'
+                                    autoCorrect='off'
+                                    autoComplete='off'
+                                    spellCheck='false'
+                                    inputMode='text'
                                     className={`w-full px-4 py-3 text-lg text-center rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
                                         mobileInputStatus === "correct"
                                             ? "bg-green-600 border-2 border-green-400 ring-2 ring-green-500"

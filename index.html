@@ -90,6 +90,30 @@
         <link rel="canonical" href="https://armenian.mohammaddaryani.dev/" />
 
         <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                10%,
+                30%,
+                50%,
+                70%,
+                90% {
+                    transform: translateX(-5px);
+                }
+                20%,
+                40%,
+                60%,
+                80% {
+                    transform: translateX(5px);
+                }
+            }
+            .shake {
+                animation: shake 0.5s ease-in-out;
+            }
+        </style>
         <script type="importmap">
             {
                 "imports": {

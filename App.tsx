@@ -26,6 +26,11 @@ const App: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showProgress, setShowProgress] = useState(false);
     const [voiceMode, setVoiceMode] = useState<"human" | "computer">("human");
+    const [mobileInput, setMobileInput] = useState("");
+    const [isMobile, setIsMobile] = useState(false);
+    const [mobileInputStatus, setMobileInputStatus] = useState<
+        "idle" | "correct" | "incorrect"
+    >("idle");
 
     // Track exercise stats
     const [exerciseStartTime, setExerciseStartTime] = useState(Date.now());
@@ -127,7 +132,7 @@ const App: React.FC = () => {
         const timeSpent = (Date.now() - exerciseStartTime) / 1000; // seconds
         const totalChars = currentLessonText.length;
         const incorrectChars = Object.values(mistakes).reduce(
-            (sum: number, count: number) => sum + count,
+            (sum: number, count) => sum + (count as number),
             0
         );
 
@@ -164,8 +169,67 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
     };
 
+    // Mobile detection
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(
+                window.innerWidth < 768 ||
+                    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                        navigator.userAgent
+                    )
+            );
+        };
+
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // Handle mobile input
+    const handleMobileInput = (inputValue: string) => {
+        if (charIndex >= currentLessonText.length || !inputValue) return;
+
+        const enteredChar = inputValue.slice(-1); // Get the last character
+        const correct = enteredChar === currentArmenianChar;
+
+        setLastPressed({ code: enteredChar, correct });
+
+        if (correct) {
+            setCorrectChars((prev) => prev + 1);
+            setMobileInputStatus("correct");
+            playAudio(currentLetterInfo);
+
+            // Clear input and feedback after a short delay
+            setTimeout(() => {
+                setMobileInput("");
+                setMobileInputStatus("idle");
+            }, 300);
+
+            if (charIndex + 1 >= currentLessonText.length) {
+                setTimeout(nextExercise, 800);
+            } else {
+                setTimeout(() => setCharIndex((prev) => prev + 1), 300);
+            }
+        } else {
+            // Track mistake
+            setMistakes((prev) => ({
+                ...prev,
+                [currentArmenianChar]: (prev[currentArmenianChar] || 0) + 1,
+            }));
+            setMobileInputStatus("incorrect");
+
+            // Clear input and feedback after a short delay
+            setTimeout(() => {
+                setMobileInput("");
+                setMobileInputStatus("idle");
+            }, 500);
+        }
+    };
+
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Skip keyboard handling on mobile
+            if (isMobile) return;
             e.preventDefault();
             if (charIndex >= currentLessonText.length) return;
 
@@ -272,8 +336,8 @@ const App: React.FC = () => {
                     </p>
                     {/* Mobile instruction */}
                     <div className='sm:hidden mt-2 text-xs text-gray-500 bg-gray-800 rounded p-2 mx-2'>
-                        💡 Tip: Use an external keyboard for the best experience
-                        on mobile devices
+                        � Mobile typing supported! Install Armenian keyboard for
+                        best experience
                     </div>
                 </header>
 
@@ -340,16 +404,94 @@ const App: React.FC = () => {
                     letterInfo={currentLetterInfo}
                     onPlaySound={() => playAudio(currentLetterInfo)}
                 />
-                <div className='w-full max-w-7xl mx-auto flex justify-center items-center gap-x-2 lg:gap-x-4 mt-4 sm:mt-6 md:mt-8'>
-                    <div className='flex-grow'>
-                        <Keyboard
-                            layout={KEYBOARD_LAYOUT}
-                            nextKeyCode={nextKeyCode}
-                            lastPressed={lastPressed}
-                            fingerToHighlight={fingerToHighlight}
-                        />
+
+                {/* Desktop Keyboard - Hidden on mobile */}
+                {!isMobile && (
+                    <div className='w-full max-w-7xl mx-auto flex justify-center items-center gap-x-2 lg:gap-x-4 mt-4 sm:mt-6 md:mt-8'>
+                        <div className='flex-grow'>
+                            <Keyboard
+                                layout={KEYBOARD_LAYOUT}
+                                nextKeyCode={nextKeyCode}
+                                lastPressed={lastPressed}
+                                fingerToHighlight={fingerToHighlight}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
+
+                {/* Mobile Typing Interface */}
+                {isMobile && (
+                    <div className='w-full max-w-md mx-auto mt-6 px-4'>
+                        <div className='bg-gray-800 rounded-lg p-6'>
+                            <h3 className='text-lg font-semibold text-center mb-4 text-sky-400'>
+                                Mobile Typing
+                            </h3>
+                            <p className='text-sm text-gray-400 text-center mb-4'>
+                                Type the highlighted character using your mobile
+                                keyboard
+                            </p>
+                            <div className='flex flex-col items-center space-y-4'>
+                                <div className='text-2xl font-bold text-white bg-gray-700 rounded-lg px-4 py-2 min-w-[80px] text-center'>
+                                    Expected:{" "}
+                                    <span className='text-sky-400'>
+                                        {currentArmenianChar === " "
+                                            ? "Space"
+                                            : currentArmenianChar}
+                                    </span>
+                                </div>
+                                <input
+                                    type='text'
+                                    value={mobileInput}
+                                    onChange={(e) => {
+                                        if (mobileInputStatus === "idle") {
+                                            setMobileInput(e.target.value);
+                                            handleMobileInput(e.target.value);
+                                        }
+                                    }}
+                                    onKeyDown={(e) => {
+                                        if (e.key === " ") {
+                                            e.preventDefault();
+                                            if (mobileInputStatus === "idle") {
+                                                handleMobileInput(" ");
+                                            }
+                                        }
+                                    }}
+                                    placeholder='Type here...'
+                                    className={`w-full px-4 py-3 text-lg text-center rounded-lg text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                                        mobileInputStatus === "correct"
+                                            ? "bg-green-600 border-2 border-green-400 ring-2 ring-green-500"
+                                            : mobileInputStatus === "incorrect"
+                                            ? "bg-red-600 border-2 border-red-400 ring-2 ring-red-500 shake"
+                                            : "bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                    }`}
+                                    autoFocus
+                                />
+                                {/* Status feedback */}
+                                <div className='text-sm text-center font-medium'>
+                                    {mobileInputStatus === "correct" && (
+                                        <span className='text-green-400'>
+                                            ✓ Correct!
+                                        </span>
+                                    )}
+                                    {mobileInputStatus === "incorrect" && (
+                                        <span className='text-red-400'>
+                                            ✗ Try again
+                                        </span>
+                                    )}
+                                    {mobileInputStatus === "idle" && (
+                                        <span className='text-gray-500'>
+                                            Ready to type
+                                        </span>
+                                    )}
+                                </div>
+                                <div className='text-xs text-gray-500 text-center'>
+                                    💡 Install Armenian keyboard on your device
+                                    for best experience
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Copyright Footer */}
                 <footer className='mt-8 text-center'>

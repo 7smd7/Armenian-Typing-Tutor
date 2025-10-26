@@ -342,7 +342,7 @@ const App: React.FC = () => {
                 {/* Copyright Footer */}
                 <footer className='mt-8 text-center'>
                     <div className='text-xs text-gray-500'>
-                        © 2025 Created by{' '}
+                        © 2025 Created by{" "}
                         <a
                             href='https://mohammaddaryani.dev'
                             target='_blank'

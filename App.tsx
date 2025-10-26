@@ -338,6 +338,21 @@ const App: React.FC = () => {
                         />
                     </div>
                 </div>
+
+                {/* Copyright Footer */}
+                <footer className='mt-8 text-center'>
+                    <div className='text-xs text-gray-500'>
+                        © 2025 Created by{' '}
+                        <a
+                            href='https://mohammaddaryani.dev'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='text-sky-400 hover:text-sky-300 transition-colors'
+                        >
+                            Mohammad Daryani
+                        </a>
+                    </div>
+                </footer>
             </div>
         </div>
     );

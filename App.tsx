@@ -31,6 +31,8 @@ const App: React.FC = () => {
     const [mobileInputStatus, setMobileInputStatus] = useState<
         "idle" | "correct" | "incorrect"
     >("idle");
+    const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+    const [showInstallButton, setShowInstallButton] = useState(false);
 
     // Track exercise stats
     const [exerciseStartTime, setExerciseStartTime] = useState(Date.now());
@@ -169,6 +171,20 @@ const App: React.FC = () => {
         setIsMenuOpen(false);
     };
 
+    const handleInstallClick = async () => {
+        if (!deferredPrompt) return;
+
+        // Show the install prompt
+        deferredPrompt.prompt();
+
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
+
+        // Reset the deferred prompt
+        setDeferredPrompt(null);
+        setShowInstallButton(false);
+    };
+
     // Mobile detection
     useEffect(() => {
         const checkMobile = () => {
@@ -183,6 +199,38 @@ const App: React.FC = () => {
         checkMobile();
         window.addEventListener("resize", checkMobile);
         return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
+    // PWA Install prompt handling
+    useEffect(() => {
+        const handleBeforeInstallPrompt = (e: Event) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later
+            setDeferredPrompt(e);
+            // Update UI to notify the user they can install the PWA
+            setShowInstallButton(true);
+        };
+
+        const handleAppInstalled = () => {
+            // Hide the install button
+            setShowInstallButton(false);
+            setDeferredPrompt(null);
+        };
+
+        window.addEventListener(
+            "beforeinstallprompt",
+            handleBeforeInstallPrompt
+        );
+        window.addEventListener("appinstalled", handleAppInstalled);
+
+        return () => {
+            window.removeEventListener(
+                "beforeinstallprompt",
+                handleBeforeInstallPrompt
+            );
+            window.removeEventListener("appinstalled", handleAppInstalled);
+        };
     }, []);
 
     // Handle mobile input
@@ -357,6 +405,14 @@ const App: React.FC = () => {
 
                         {/* Mobile-friendly button grid */}
                         <div className='grid grid-cols-2 sm:grid-cols-3 md:flex md:flex-wrap gap-2 justify-center'>
+                            {showInstallButton && (
+                                <button
+                                    onClick={handleInstallClick}
+                                    className='bg-purple-700 hover:bg-purple-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors'
+                                >
+                                    📱 Install App
+                                </button>
+                            )}
                             <button
                                 onClick={() => setShowProgress(true)}
                                 className='bg-green-700 hover:bg-green-600 text-white font-bold py-2 px-3 text-sm rounded-lg transition-colors'

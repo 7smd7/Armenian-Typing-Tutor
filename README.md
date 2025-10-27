@@ -16,6 +16,7 @@ An interactive desktop application designed to help you master the Armenian keyb
 - **🔊 Audio Support** - Voice toggle for pronunciation guidance
 - **💾 Local Storage** - Your progress is saved automatically
 - **🖥️ Cross-Platform** - Native macOS app (Intel & Apple Silicon)
+- **📱 PWA Support** - Install as a web app on any device (Android, iOS, Desktop)
 
 ## 🚀 Quick Start
 
@@ -87,23 +88,26 @@ Each lesson includes:
 - **Packaging**: electron-builder
 - **Icons**: Custom SVG icons converted to .icns
 
-## 🌐 Web (Serverless) Deployment
+## 📱 Progressive Web App (PWA)
 
-This project can also run as a serverless web app (no Electron) — the React renderer is fully client-side and uses localStorage for progress persistence.
+This app can be installed as a native-like web application on any device:
 
-- A GitHub Actions workflow is included to automatically build and publish the site to GitHub Pages when you push to `main`.
-- The site will be available at: `https://7smd7.github.io/Armenian-Typing-Tutor/` once the workflow completes (it may take a minute).
+### Installation
+1. **Visit the website**: [armenian.mohammaddaryani.dev](https://armenian.mohammaddaryani.dev)
+2. **Install Prompt**: Look for the "📱 Install App" button or browser install prompt
+3. **Add to Home Screen**: Follow your browser's instructions to install
 
-To build & deploy locally instead of waiting for Actions, you can run:
+### Features
+- **Offline Support**: Works without internet connection
+- **Native Experience**: Launches like a native app
+- **Auto-updates**: Automatically updates when new versions are available
+- **Cross-platform**: Works on Android, iOS, Windows, macOS, and Linux
 
-```bash
-npm run build
-npm run deploy
-```
-
-Notes:
-- The web build does not include Electron-specific native features. The `main.cjs` file is retained for desktop packaging, but it is not used by the web site.
-- Use `npm run dev` to run a local development server.
+### Browser Support
+- **Chrome/Edge**: Install button appears automatically
+- **Firefox**: Manual installation via address bar menu
+- **Safari (iOS)**: Share button → "Add to Home Screen"
+- **Samsung Internet**: Install button in menu
 
 ## 📊 Progress Tracking
 

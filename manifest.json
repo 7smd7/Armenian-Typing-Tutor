@@ -1,0 +1,35 @@
+{
+    "name": "Armenian Typing Tutor",
+    "short_name": "Armenian Tutor",
+    "description": "Learn the Armenian alphabet by typing. Interactive lessons with audio pronunciation and progress tracking.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#111827",
+    "theme_color": "#0ea5e9",
+    "orientation": "portrait-primary",
+    "categories": ["education", "productivity"],
+    "lang": "en",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Start Learning",
+            "short_name": "Learn",
+            "description": "Start your Armenian typing lessons",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "/favicon.svg",
+                    "sizes": "any"
+                }
+            ]
+        }
+    ]
+}

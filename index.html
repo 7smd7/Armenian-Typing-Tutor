@@ -4,6 +4,12 @@
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Cache-Control"
+            content="no-cache, no-store, must-revalidate"
+        />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
         <title>Armenian Typing Tutor - Learn Armenian Alphabet by Typing</title>
 
         <!-- SEO Meta Tags -->
@@ -127,18 +133,43 @@
                 }
             }
         </script>
-      <script type="module" crossorigin src="/assets/index-Ubn8DE3e.js"></script>
+      <script type="module" crossorigin src="/assets/index.Ubn8DE3e.js"></script>
     </head>
     <body class="bg-gray-900 text-gray-200">
         <div id="root"></div>
         <script>
-            // Register service worker for PWA functionality
+            // Register service worker for PWA functionality with update handling
             if ("serviceWorker" in navigator) {
                 window.addEventListener("load", () => {
                     navigator.serviceWorker
                         .register("/sw.js")
                         .then((registration) => {
                             console.log("SW registered: ", registration);
+
+                            // Check for updates every 30 seconds
+                            setInterval(() => {
+                                registration.update();
+                            }, 30000);
+
+                            // Handle service worker updates
+                            registration.addEventListener("updatefound", () => {
+                                const newWorker = registration.installing;
+                                newWorker.addEventListener(
+                                    "statechange",
+                                    () => {
+                                        if (newWorker.state === "activated") {
+                                            // New service worker is active, reload the page
+                                            if (
+                                                confirm(
+                                                    "New version available! Reload to update?"
+                                                )
+                                            ) {
+                                                window.location.reload();
+                                            }
+                                        }
+                                    }
+                                );
+                            });
                         })
                         .catch((registrationError) => {
                             console.log(
@@ -146,6 +177,14 @@
                                 registrationError
                             );
                         });
+
+                    // Listen for controller change (new service worker took over)
+                    navigator.serviceWorker.addEventListener(
+                        "controllerchange",
+                        () => {
+                            window.location.reload();
+                        }
+                    );
                 });
             }
         </script>

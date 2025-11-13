@@ -749,7 +749,7 @@ export const LESSONS: Lesson[] = [
             { name: "Pattern 1", text: "գգ գգգ գգ գգգ գգ գգգ գգ գգգ" },
             { name: "With ա", text: "գա ագ գաա աագ գագ աագա" },
             { name: "With բ", text: "գբ բգ գբգ բգբ գբա բգա" },
-            { name: "All Three", text: "գաբ բագ աբգ գբա բագ աగբ" },
+            { name: "All Three", text: "գաբ բագ աբգ գբա բագ աբ" },
         ],
     },
     {

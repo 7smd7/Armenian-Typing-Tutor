@@ -1,4 +1,5 @@
 // Progress tracking and analysis system for Armenian Typing Tutor
+import { LESSONS } from "./constants";
 
 export interface ExerciseStats {
     exerciseId: string;
@@ -62,7 +63,10 @@ class ProgressTracker {
         try {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
-                return JSON.parse(stored);
+                const progress = JSON.parse(stored);
+                // Update totalLessons in case new lessons were added
+                progress.totalLessons = LESSONS.length;
+                return progress;
             }
         } catch (error) {
             console.error("Error loading progress:", error);
@@ -75,7 +79,7 @@ class ProgressTracker {
     private createNewProgress(): UserProgress {
         return {
             userId: this.generateUserId(),
-            totalLessons: 20,
+            totalLessons: LESSONS.length,
             completedLessons: 0,
             currentLesson: 1,
             lessonsProgress: {},

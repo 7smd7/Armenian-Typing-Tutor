@@ -29,7 +29,23 @@ const NON_TYPING_KEY_CODES = new Set([
 ]);
 
 const App: React.FC = () => {
-    const [lessonIndex, setLessonIndex] = useState(0);
+    // Initialize lesson from URL hash
+    const getInitialLessonFromHash = () => {
+        const hash = window.location.hash.slice(1); // Remove '#'
+        if (hash.startsWith("lesson-")) {
+            const lessonNum = parseInt(hash.split("-")[1], 10);
+            if (
+                !isNaN(lessonNum) &&
+                lessonNum >= 1 &&
+                lessonNum <= LESSONS.length
+            ) {
+                return lessonNum - 1; // Convert to 0-indexed
+            }
+        }
+        return 0;
+    };
+
+    const [lessonIndex, setLessonIndex] = useState(getInitialLessonFromHash);
     const [exerciseIndex, setExerciseIndex] = useState(0);
     const [charIndex, setCharIndex] = useState(0);
     const [lastPressed, setLastPressed] = useState<{
@@ -144,6 +160,9 @@ const App: React.FC = () => {
                 setExerciseStartTime(Date.now());
                 setMistakes({});
                 setCorrectChars(0);
+
+                // Update URL hash
+                window.history.replaceState(null, "", `#lesson-${lIdx + 1}`);
             }
         }
     };
@@ -213,6 +232,42 @@ const App: React.FC = () => {
         setDeferredPrompt(null);
         setShowInstallButton(false);
     };
+
+    // Handle hash changes (browser back/forward, direct hash links)
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.slice(1);
+            if (hash.startsWith("lesson-")) {
+                const lessonNum = parseInt(hash.split("-")[1], 10);
+                if (
+                    !isNaN(lessonNum) &&
+                    lessonNum >= 1 &&
+                    lessonNum <= LESSONS.length
+                ) {
+                    const newLessonIndex = lessonNum - 1;
+                    if (newLessonIndex !== lessonIndex) {
+                        setLessonIndex(newLessonIndex);
+                        setExerciseIndex(0);
+                        setCharIndex(0);
+                        setLastPressed(null);
+                        setExerciseStartTime(Date.now());
+                        setMistakes({});
+                        setCorrectChars(0);
+                    }
+                }
+            }
+        };
+
+        window.addEventListener("hashchange", handleHashChange);
+        return () => window.removeEventListener("hashchange", handleHashChange);
+    }, [lessonIndex]);
+
+    // Set initial hash on mount
+    useEffect(() => {
+        if (!window.location.hash) {
+            window.history.replaceState(null, "", `#lesson-${lessonIndex + 1}`);
+        }
+    }, [lessonIndex]);
 
     // Mobile detection
     useEffect(() => {

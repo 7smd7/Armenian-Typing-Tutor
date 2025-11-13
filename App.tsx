@@ -15,6 +15,19 @@ import VoiceToggle from "./components/VoiceToggle";
 import ProgressDashboard from "./components/ProgressDashboard";
 import { getProgressTracker } from "./progressTracker";
 
+const NON_TYPING_KEY_CODES = new Set([
+    "ShiftLeft",
+    "ShiftRight",
+    "CapsLock",
+    "Tab",
+    "AltLeft",
+    "AltRight",
+    "MetaLeft",
+    "MetaRight",
+    "ControlLeft",
+    "ControlRight",
+]);
+
 const App: React.FC = () => {
     const [lessonIndex, setLessonIndex] = useState(0);
     const [exerciseIndex, setExerciseIndex] = useState(0);
@@ -33,6 +46,7 @@ const App: React.FC = () => {
     >("idle");
     const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
     const [showInstallButton, setShowInstallButton] = useState(false);
+    const [isShiftPressed, setIsShiftPressed] = useState(false);
 
     // Track exercise stats
     const [exerciseStartTime, setExerciseStartTime] = useState(Date.now());
@@ -63,6 +77,21 @@ const App: React.FC = () => {
     const fingerToHighlight = nextKeyCode
         ? FINGER_MAP[nextKeyCode] || null
         : null;
+
+    // Check if current character requires Shift
+    const isShiftRequired = useMemo(() => {
+        if (!currentArmenianChar) return false;
+
+        // Check if this character is a capital letter
+        for (const row of KEYBOARD_LAYOUT) {
+            for (const key of row) {
+                if (key?.shift?.armenian === currentArmenianChar) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }, [currentArmenianChar]);
 
     const playAudio = useCallback(
         (letterInfo: LetterInfo | null) => {
@@ -133,8 +162,8 @@ const App: React.FC = () => {
     const recordExerciseCompletion = () => {
         const timeSpent = (Date.now() - exerciseStartTime) / 1000; // seconds
         const totalChars = currentLessonText.length;
-        const incorrectChars = Object.values(mistakes).reduce(
-            (sum: number, count) => sum + (count as number),
+        const incorrectChars = (Object.values(mistakes) as number[]).reduce(
+            (sum, count) => sum + count,
             0
         );
 
@@ -280,11 +309,36 @@ const App: React.FC = () => {
         const handleKeyDown = (e: KeyboardEvent) => {
             // Skip keyboard handling on mobile
             if (isMobile) return;
-            e.preventDefault();
+
+            // Track shift key state
+            if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+                setIsShiftPressed(true);
+                return;
+            }
+
+            // Allow browser/system shortcuts like refresh or copy/paste
+            if (e.metaKey || e.ctrlKey) return;
+
+            // Let non-character keys (e.g. Shift, CapsLock) behave normally
+            if (NON_TYPING_KEY_CODES.has(e.code)) return;
+
             if (charIndex >= currentLessonText.length) return;
 
+            e.preventDefault();
+
             const expectedKeyCode = keyMap.get(currentArmenianChar);
-            const correct = e.code === expectedKeyCode;
+            if (!expectedKeyCode) return;
+
+            // Check if the key code matches
+            const keyMatches = e.code === expectedKeyCode;
+
+            // Check if shift state matches what's required
+            const shiftMatches = isShiftRequired
+                ? isShiftPressed
+                : !isShiftPressed;
+
+            // Both key and shift state must be correct
+            const correct = keyMatches && shiftMatches;
 
             setLastPressed({ code: e.code, correct });
 
@@ -305,9 +359,18 @@ const App: React.FC = () => {
             }
         };
 
+        const handleKeyUp = (e: KeyboardEvent) => {
+            // Track shift key release
+            if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+                setIsShiftPressed(false);
+            }
+        };
+
         window.addEventListener("keydown", handleKeyDown);
+        window.addEventListener("keyup", handleKeyUp);
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener("keyup", handleKeyUp);
         };
     }, [
         charIndex,
@@ -319,6 +382,9 @@ const App: React.FC = () => {
         currentArmenianChar,
         currentLetterInfo,
         nextExercise,
+        isShiftRequired,
+        isShiftPressed,
+        isMobile,
     ]);
 
     const renderLessonText = () => {
@@ -470,6 +536,7 @@ const App: React.FC = () => {
                                 nextKeyCode={nextKeyCode}
                                 lastPressed={lastPressed}
                                 fingerToHighlight={fingerToHighlight}
+                                isShiftRequired={isShiftRequired}
                             />
                         </div>
                     </div>

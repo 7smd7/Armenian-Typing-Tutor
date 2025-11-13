@@ -7,6 +7,7 @@ interface KeyboardProps {
     nextKeyCode: string | null;
     lastPressed: { code: string; correct: boolean } | null;
     fingerToHighlight: Finger | null;
+    isShiftRequired: boolean;
 }
 
 const Key: React.FC<{
@@ -15,7 +16,15 @@ const Key: React.FC<{
     isLastPressed: boolean;
     wasCorrect: boolean;
     fingerToHighlight: Finger | null;
-}> = ({ keyInfo, isNext, isLastPressed, wasCorrect, fingerToHighlight }) => {
+    isShiftRequired?: boolean;
+}> = ({
+    keyInfo,
+    isNext,
+    isLastPressed,
+    wasCorrect,
+    fingerToHighlight,
+    isShiftRequired = false,
+}) => {
     if (!keyInfo) {
         return (
             <div className='w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 rounded-lg bg-gray-800'></div>
@@ -49,11 +58,27 @@ const Key: React.FC<{
 
     const isHomeKey = keyInfo.code === "KeyF" || keyInfo.code === "KeyJ";
 
+    // Determine which character to display
+    const displayChar =
+        isNext && isShiftRequired && keyInfo.shift
+            ? keyInfo.shift.armenian
+            : keyInfo.armenian;
+
     return (
         <div
             className={`relative flex items-center justify-center h-6 sm:h-8 md:h-10 ${widthClass} rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-sm sm:text-base md:text-xl select-none ${getBackgroundColor()}`}
         >
-            {keyInfo.armenian}
+            <div className='flex flex-col items-center justify-center'>
+                {/* Show capital letter on top if shift variant exists and not currently highlighted */}
+                {keyInfo.shift && !isNext && (
+                    <div className='text-[0.6em] opacity-60 leading-none mb-0.5'>
+                        {keyInfo.shift.armenian}
+                    </div>
+                )}
+                <div className={keyInfo.shift && !isNext ? "text-[0.9em]" : ""}>
+                    {displayChar}
+                </div>
+            </div>
             {isHomeKey && (
                 <div className='absolute bottom-0.5 sm:bottom-1 md:bottom-1.5 left-1/2 -translate-x-1/2 w-2 sm:w-3 md:w-4 h-0.5 bg-gray-500 rounded-sm'></div>
             )}
@@ -69,6 +94,7 @@ const Keyboard: React.FC<KeyboardProps> = ({
     nextKeyCode,
     lastPressed,
     fingerToHighlight,
+    isShiftRequired,
 }) => {
     return (
         <div className='p-2 sm:p-3 bg-gray-800 rounded-xl shadow-2xl w-full max-w-4xl mx-auto'>
@@ -80,6 +106,21 @@ const Keyboard: React.FC<KeyboardProps> = ({
                         rowIndex < layout.length - 1 ? " mb-0.5 sm:mb-1" : ""
                     }`}
                 >
+                    {/* Add left Shift key for the bottom row */}
+                    {rowIndex === 3 && (
+                        <div
+                            className={`relative flex items-center justify-center h-6 sm:h-8 md:h-10 w-14 sm:w-18 md:w-24 rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-xs sm:text-sm md:text-base select-none ${
+                                isShiftRequired
+                                    ? "bg-sky-600 animate-pulse"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            Shift
+                            {isShiftRequired && (
+                                <div className='absolute inset-0 border-2 border-sky-300 rounded-lg animate-pulse'></div>
+                            )}
+                        </div>
+                    )}
                     {row.map((keyInfo, keyIndex) => (
                         <Key
                             key={
@@ -94,8 +135,24 @@ const Keyboard: React.FC<KeyboardProps> = ({
                                     ? fingerToHighlight
                                     : null
                             }
+                            isShiftRequired={isShiftRequired}
                         />
                     ))}
+                    {/* Add right Shift key for the bottom row */}
+                    {rowIndex === 3 && (
+                        <div
+                            className={`relative flex items-center justify-center h-6 sm:h-8 md:h-10 w-14 sm:w-18 md:w-24 rounded-lg shadow-lg transition-colors duration-150 text-white font-sans text-xs sm:text-sm md:text-base select-none ${
+                                isShiftRequired
+                                    ? "bg-sky-600 animate-pulse"
+                                    : "bg-gray-700 hover:bg-gray-600"
+                            }`}
+                        >
+                            Shift
+                            {isShiftRequired && (
+                                <div className='absolute inset-0 border-2 border-sky-300 rounded-lg animate-pulse'></div>
+                            )}
+                        </div>
+                    )}
                 </div>
             ))}
 

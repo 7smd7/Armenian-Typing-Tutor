@@ -716,8 +716,8 @@ export const LESSONS: Lesson[] = [
                 text: "աաա աաա աաա աաա աաա աաա աաա աաա աաա աաա",
             },
             { name: "With Space", text: "ա ա ա ա ա ա ա ա ա ա ա ա ա ա ա" },
-            { name: "Pattern 1", text: "աա ааա աա ааա աա ааա աա ааա" },
-            { name: "Pattern 2", text: "ա աա ааա աա ա աա ааա աա ա" },
+            { name: "Pattern 1", text: "աա աաա աա աաա աա աաա աա աաա" },
+            { name: "Pattern 2", text: "ա աա աաա աա ա աա աաա աա ա" },
             { name: "With ֆ", text: "աֆ ֆա աֆ ֆա աֆաֆ ֆաֆա աֆաֆ" },
             { name: "Alternating", text: "ա ֆ ա ֆ ա ֆ աֆ ֆա աֆ ֆա" },
         ],
@@ -1034,7 +1034,7 @@ export const LESSONS: Lesson[] = [
                 text: "ննն ննն ննն ննն ննն ննն ննն ննն ննն ննն",
             },
             { name: "With Space", text: "ն ն ն ն ն ն ն ն ն ն ն ն ն ն ն" },
-            { name: "Pattern", text: "նն նննն նն ննն նն ննն նն ննն" },
+            { name: "Pattern", text: "նն ննն նն ննն նն ննն նն ննն" },
             { name: "Pairs", text: "նա ան նե են նի ին նյ յն" },
             { name: "Three Letter", text: "նաբ բան նեգ գեն նիլ լին" },
             {
@@ -1161,7 +1161,7 @@ export const LESSONS: Lesson[] = [
             },
             { name: "With Space", text: "ս ս ս ս ս ս ս ս ս ս ս ս ս ս ս" },
             { name: "Pattern", text: "սս սսս սս սսս սս սսս սս սսս" },
-            { name: "Simple", text: "սա ասսե ես սի իս սո ոս" },
+            { name: "Simple", text: "սա աս սե ես սի իս սո ոս" },
             { name: "Build", text: "սաբ բաս սեգ գես սին նիս" },
             {
                 name: "Review Mix",
@@ -1252,10 +1252,10 @@ export const LESSONS: Lesson[] = [
             { name: "With Space", text: "ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ ւ" },
             { name: "Pattern", text: "ււ ււււ ււ ււււ ււ ււււ ււ ււււ" },
             { name: "Simple", text: "ւա աւ ւե եւ ւի իւ ւո օւ" },
-            { name: "Build", text: "ււաբ բաււ ււեգ գեււ ււին նիււ" },
+            { name: "Build", text: "ւաբ բաւ ւեգ գեւ ւին նիւ" },
             {
                 name: "Full Review",
-                text: "ււ ց ր տ վ ս ռ ջ պ չ ո շ ն յ մ ճ ղ ձ հ կ ծ խ լ ի ժ թ ը է զ ե դ գ բ ա",
+                text: "ւ ց ր տ վ ս ռ ջ պ չ ո շ ն յ մ ճ ղ ձ հ կ ծ խ լ ի ժ թ ը է զ ե դ գ բ ա",
             },
         ],
     },
@@ -1283,10 +1283,10 @@ export const LESSONS: Lesson[] = [
         exercises: [
             {
                 name: "Solo Practice",
-                text: "րրր րրր րրր րրր րրր րրր րրր րրր րրր րրր",
+                text: "թթք թթք թթք թթք թթք թթք թթք թթք թթք թթք",
             },
             { name: "With Space", text: "ք ք ք ք ք ք ք ք ք ք ք ք ք ք ք" },
-            { name: "Pattern", text: "րք քրք րք քրք րք քրք րք քքր" },
+            { name: "Pattern", text: "թթ թթք թթ թթք թթ թթք թթ թթք" },
             { name: "Build", text: "քա աք քե եք քի իք քո օք" },
             { name: "Three Letter", text: "քաբ բաք քեգ գեք քին նիք" },
             {
@@ -1601,7 +1601,7 @@ export const LESSONS: Lesson[] = [
     },
     {
         title: "Lesson 73",
-        description: "Shape Distinction: դ vs n - Hook Orientation",
+        description: "Shape Distinction: դ vs ն - Hook Orientation",
         exercises: [
             { name: "դ vs ն", text: "դ ն դ ն դ ն դ ն դ ն դ ն դ ն դ ն" },
             { name: "դ [d] Practice", text: "դ դ դ դդ դդ դա դե դի դո դու" },

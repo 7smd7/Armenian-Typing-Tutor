@@ -1,0 +1,12 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(30,30) scale(1.1,1.1)"><path d="M 23.75,12.50
+           C 25.25,9.75 26.12,7.62 25.62,5.25
+             25.00,2.00 20.47,-2.58 13.62,1.88
+             9.62,5.12 8.25,8.25 7.62,11.25
+             7.12,17.38 11.88,20.25 15.88,18.38
+             19.50,16.38 22.02,15.36 23.75,12.50 Z" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.573369s ease-in-out; stroke-dasharray: 57.3369, 57.3369; stroke-dashoffset: 0;"></path><path d="
+           M 24.75,10.25
+           C 19.75,22.50 12.50,25.38 7.12,30.50" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.272465s ease-in-out 0.623369s; stroke-dasharray: 27.2465, 27.2465; stroke-dashoffset: 0;"></path><path d="M 0.38,26.00
+           C 0.38,26.00 10.88,32.88 13.62,34.75" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.158702s ease-in-out 0.945834s; stroke-dasharray: 15.8702, 15.8702; stroke-dashoffset: 0;"></path><path d="M 33.77,19.02
+           C 29.38,27.50 33.22,26.00 37.12,26.12
+             33.88,33.25 29.62,42.25 27.00,48.38
+             24.75,53.62 32.62,56.00 40.12,44.25" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.56765s ease-in-out 1.15454s; stroke-dasharray: 56.765, 56.765; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

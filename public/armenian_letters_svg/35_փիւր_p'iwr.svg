@@ -1,0 +1,11 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(16,21) scale(1.1,1.1)"><path d="M 0.38,26.50
+           C 12.25,16.88 12.50,22.12 8.88,27.25
+             3.62,35.75 11.75,36.50 18.00,26.75" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.380618s ease-in-out; stroke-dasharray: 38.0618, 38.0618; stroke-dashoffset: 0;"></path><path d="M 30.00,1.00
+           C 29.25,2.75 6.00,52.38 4.75,55.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.596119s ease-in-out 0.430618s; stroke-dasharray: 59.6119, 59.6119; stroke-dashoffset: 0;"></path><path d="M 18.12,26.88
+           C 26.62,18.62 30.12,20.00 26.75,26.00
+             20.12,37.00 29.62,35.12 32.62,30.12" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.338831s ease-in-out 1.07674s; stroke-dasharray: 33.8831, 33.8831; stroke-dashoffset: 0;"></path><path d="M 41.88,21.00
+           C 40.88,23.25 39.00,27.50 37.62,30.38
+             35.88,36.25 43.38,34.00 47.00,28.25" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.247952s ease-in-out 1.46557s; stroke-dasharray: 24.7952, 24.7952; stroke-dashoffset: 0;"></path><path d="M 59.75,1.00
+           C 59.75,1.00 34.75,55.00 34.75,55.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.595063s ease-in-out 1.76352s; stroke-dasharray: 59.5063, 59.5063; stroke-dashoffset: 0;"></path><path d="M 47.00,28.25
+           C 55.88,18.88 60.62,19.00 55.12,28.25
+             51.12,35.75 56.62,36.50 62.75,28.62" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.366857s ease-in-out 2.40858s; stroke-dasharray: 36.6857, 36.6857; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

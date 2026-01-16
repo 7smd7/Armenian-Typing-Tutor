@@ -6,6 +6,8 @@ import {
     FINGER_MAP,
     SOUND_MAP,
     COMPUTER_VOICE_PHONETIC_MAP,
+    WOMAN_VOICE_MAP,
+    LETTER_SVG_MAP,
 } from "./constants";
 import { type LetterInfo, type Finger } from "./types";
 import Keyboard from "./components/Keyboard";
@@ -27,6 +29,52 @@ const NON_TYPING_KEY_CODES = new Set([
     "ControlLeft",
     "ControlRight",
 ]);
+
+// Helper function to get SVG file name based on number
+function getSvgFileName(num: number): string {
+    const fileNames: Record<number, string> = {
+        1: "այբ_ayb",
+        2: "բեն_ben",
+        3: "գիմ_gim",
+        4: "դա_da",
+        5: "եչ_yeč",
+        6: "զա_za",
+        7: "է_ē",
+        8: "ըթ_ët'",
+        9: "թօ_t'ò",
+        10: "ժէ_žē",
+        11: "ինի_ini",
+        12: "լիւն_liwn",
+        13: "խէ_xē",
+        14: "ծա_ça",
+        15: "կեն_ken",
+        16: "հօ_hò",
+        17: "ձա_ja",
+        18: "ղատ_ġat",
+        19: "ճէ_č̣ē",
+        20: "մեն_men",
+        21: "յի_yi",
+        22: "նու_now",
+        23: "շա_ša",
+        24: "ո_vo",
+        25: "չա_ča",
+        26: "պէ_pē",
+        27: "ջէ_ǰē",
+        28: "ռա_ṙa",
+        29: "սէ_sē",
+        30: "վեւ_vew",
+        31: "տիւն_tiwn",
+        32: "րէ_rē",
+        33: "ցօ_c'ò",
+        34: "հիւն_hiwn",
+        35: "փիւր_p'iwr",
+        36: "քէ_k'ē",
+        37: "և_jew",
+        38: "օ_ò",
+        39: "ֆէ_fē",
+    };
+    return fileNames[num] || "";
+}
 
 const App: React.FC = () => {
     // Initialize lesson from URL hash
@@ -54,7 +102,9 @@ const App: React.FC = () => {
     } | null>(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showProgress, setShowProgress] = useState(false);
-    const [voiceMode, setVoiceMode] = useState<"human" | "computer">("human");
+    const [voiceMode, setVoiceMode] = useState<"woman" | "human" | "computer">(
+        "woman"
+    );
     const [mobileInput, setMobileInput] = useState("");
     const [isMobile, setIsMobile] = useState(false);
     const [mobileInputStatus, setMobileInputStatus] = useState<
@@ -115,7 +165,22 @@ const App: React.FC = () => {
 
             speechSynthesis.cancel(); // Stop any currently speaking computer voice
 
-            if (voiceMode === "human") {
+            if (voiceMode === "woman") {
+                // New high-quality woman voice
+                const audioNumber = WOMAN_VOICE_MAP[letterInfo.armenian];
+
+                if (audioNumber) {
+                    const audioUrl = `https://armenian-alphabet.com/src/audio/${audioNumber}.mp3`;
+                    const audio = new Audio(audioUrl);
+                    audio.play().catch((error) => {
+                        console.error(
+                            `Failed to play woman voice audio for "${letterInfo.armenian}":`,
+                            error
+                        );
+                    });
+                }
+            } else if (voiceMode === "human") {
+                // Old male voice from learn101
                 const soundFileKey = SOUND_MAP[letterInfo.armenian];
 
                 if (soundFileKey) {
@@ -123,13 +188,13 @@ const App: React.FC = () => {
                     const audio = new Audio(audioUrl);
                     audio.play().catch((error) => {
                         console.error(
-                            `Failed to play audio for "${letterInfo.armenian}":`,
+                            `Failed to play human voice audio for "${letterInfo.armenian}":`,
                             error
                         );
                     });
                 }
             } else {
-                // Use the phonetic map to get an English-readable sound.
+                // Computer voice (TTS)
                 const textToSpeak =
                     COMPUTER_VOICE_PHONETIC_MAP[letterInfo.armenian];
                 if (textToSpeak) {
@@ -517,9 +582,11 @@ const App: React.FC = () => {
                             <VoiceToggle
                                 voiceMode={voiceMode}
                                 onToggle={() =>
-                                    setVoiceMode((prev) =>
-                                        prev === "human" ? "computer" : "human"
-                                    )
+                                    setVoiceMode((prev) => {
+                                        if (prev === "woman") return "human";
+                                        if (prev === "human") return "computer";
+                                        return "woman";
+                                    })
                                 }
                             />
                         </div>
@@ -611,9 +678,34 @@ const App: React.FC = () => {
                             <div className='flex flex-col items-center space-y-4'>
                                 {/* Merged Character Display for Mobile */}
                                 {currentLetterInfo && (
-                                    <div className='flex flex-col items-center justify-center bg-gray-700 rounded-xl shadow-lg w-full max-w-xs h-20 sm:h-24 p-4'>
-                                        <div className='text-3xl sm:text-4xl font-bold text-sky-400 mb-2'>
-                                            {currentLetterInfo.armenian}
+                                    <div className='flex flex-col items-center justify-center bg-gray-700 rounded-xl shadow-lg w-full max-w-xs p-4'>
+                                        <div className='flex items-center justify-center gap-3 mb-2'>
+                                            <div className='text-4xl sm:text-5xl font-bold text-sky-400'>
+                                                {currentLetterInfo.armenian}
+                                            </div>
+                                            {/* Small SVG handwriting beside letter */}
+                                            {LETTER_SVG_MAP[
+                                                currentLetterInfo.armenian
+                                            ] && (
+                                                <img
+                                                    src={`/armenian_letters_svg/${String(
+                                                        LETTER_SVG_MAP[
+                                                            currentLetterInfo
+                                                                .armenian
+                                                        ]
+                                                    ).padStart(
+                                                        2,
+                                                        "0"
+                                                    )}_${getSvgFileName(
+                                                        LETTER_SVG_MAP[
+                                                            currentLetterInfo
+                                                                .armenian
+                                                        ]
+                                                    )}.svg`}
+                                                    alt={`Handwriting for ${currentLetterInfo.armenian}`}
+                                                    className='w-12 h-12 opacity-80'
+                                                />
+                                            )}
                                         </div>
                                         <div className='flex space-x-2 items-center'>
                                             <button

@@ -1,0 +1,7 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(20,44) scale(1.1,1.1)"><path d="M 28.12,1.00
+           C 26.00,6.12 16.62,25.88 15.25,29.12
+             11.75,37.25 -0.12,36.75 0.12,32.62
+             1.12,25.75 14.12,31.50 17.88,32.75
+             22.25,34.38 26.00,31.38 27.38,29.75" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.806031s ease-in-out; stroke-dasharray: 80.6031, 80.6031; stroke-dashoffset: 0;"></path><path d="M 47.62,1.00
+           C 42.12,12.50 37.12,23.38 34.25,29.62
+             31.62,40.38 43.50,31.88 47.00,25.62" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.527244s ease-in-out 0.856031s; stroke-dasharray: 52.7244, 52.7244; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

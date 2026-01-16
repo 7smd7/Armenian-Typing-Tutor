@@ -263,6 +263,174 @@ export const COMPUTER_VOICE_PHONETIC_MAP: Record<string, string> = {
     ԵՒ: "yev",
 };
 
+// Map Armenian letters to their SVG file numbers for handwriting display
+export const LETTER_SVG_MAP: Record<string, number> = {
+    // Lowercase letters
+    ա: 1, // այբ (ayb)
+    բ: 2, // բեն (ben)
+    գ: 3, // գիմ (gim)
+    դ: 4, // դա (da)
+    ե: 5, // եչ (yech)
+    զ: 6, // զա (za)
+    է: 7, // է (e)
+    ը: 8, // ըթ (et)
+    թ: 9, // թօ (to)
+    ժ: 10, // ժէ (zhe)
+    ի: 11, // ինի (ini)
+    լ: 12, // լիւն (liun)
+    խ: 13, // խէ (khe)
+    ծ: 14, // ծա (tsa)
+    կ: 15, // կեն (ken)
+    հ: 16, // հօ (ho)
+    ձ: 17, // ձա (dza)
+    ղ: 18, // ղատ (ghat)
+    ճ: 19, // ճէ (che)
+    մ: 20, // մեն (men)
+    յ: 21, // յի (yi)
+    ն: 22, // նու (nu)
+    շ: 23, // շա (sha)
+    ո: 24, // ո (vo)
+    չ: 25, // չա (cha)
+    պ: 26, // պէ (pe)
+    ջ: 27, // ջէ (je)
+    ռ: 28, // ռա (ra)
+    ս: 29, // սէ (se)
+    վ: 30, // վեւ (vev)
+    տ: 31, // տիւն (tiun)
+    ր: 32, // րէ (re)
+    ց: 33, // ցօ (tso)
+    ւ: 34, // հիւն (hiun)
+    փ: 35, // փիւր (piur)
+    ք: 36, // քէ (ke)
+    և: 37, // և (yev)
+    օ: 38, // օ (o)
+    ֆ: 39, // ֆէ (fe)
+    // Uppercase letters use the same SVG as lowercase
+    Ա: 1,
+    Բ: 2,
+    Գ: 3,
+    Դ: 4,
+    Ե: 5,
+    Զ: 6,
+    Է: 7,
+    Ը: 8,
+    Թ: 9,
+    Ժ: 10,
+    Ի: 11,
+    Լ: 12,
+    Խ: 13,
+    Ծ: 14,
+    Կ: 15,
+    Հ: 16,
+    Ձ: 17,
+    Ղ: 18,
+    Ճ: 19,
+    Մ: 20,
+    Յ: 21,
+    Ն: 22,
+    Շ: 23,
+    Ո: 24,
+    Չ: 25,
+    Պ: 26,
+    Ջ: 27,
+    Ռ: 28,
+    Ս: 29,
+    Վ: 30,
+    Տ: 31,
+    Ր: 32,
+    Ց: 33,
+    Ւ: 34,
+    Փ: 35,
+    Ք: 36,
+    ԵՒ: 37,
+    Օ: 38,
+    Ֆ: 39,
+};
+
+// Map Armenian letters to their audio file numbers for the new woman voice
+export const WOMAN_VOICE_MAP: Record<string, number> = {
+    // Same mapping as SVG - audio files correspond to letter order
+    ա: 1,
+    բ: 2,
+    գ: 3,
+    դ: 4,
+    ե: 5,
+    զ: 6,
+    է: 7,
+    ը: 8,
+    թ: 9,
+    ժ: 10,
+    ի: 11,
+    լ: 12,
+    խ: 13,
+    ծ: 14,
+    կ: 15,
+    հ: 16,
+    ձ: 17,
+    ղ: 18,
+    ճ: 19,
+    մ: 20,
+    յ: 21,
+    ն: 22,
+    շ: 23,
+    ո: 24,
+    չ: 25,
+    պ: 26,
+    ջ: 27,
+    ռ: 28,
+    ս: 29,
+    վ: 30,
+    տ: 31,
+    ր: 32,
+    ց: 33,
+    ւ: 34,
+    փ: 35,
+    ք: 36,
+    և: 37,
+    օ: 38,
+    ֆ: 39,
+    // Uppercase letters use the same audio as lowercase
+    Ա: 1,
+    Բ: 2,
+    Գ: 3,
+    Դ: 4,
+    Ե: 5,
+    Զ: 6,
+    Է: 7,
+    Ը: 8,
+    Թ: 9,
+    Ժ: 10,
+    Ի: 11,
+    Լ: 12,
+    Խ: 13,
+    Ծ: 14,
+    Կ: 15,
+    Հ: 16,
+    Ձ: 17,
+    Ղ: 18,
+    Ճ: 19,
+    Մ: 20,
+    Յ: 21,
+    Ն: 22,
+    Շ: 23,
+    Ո: 24,
+    Չ: 25,
+    Պ: 26,
+    Ջ: 27,
+    Ռ: 28,
+    Ս: 29,
+    Վ: 30,
+    Տ: 31,
+    Ր: 32,
+    Ց: 33,
+    Ւ: 34,
+    Փ: 35,
+    Ք: 36,
+    ԵՒ: 37,
+    Օ: 38,
+    Ֆ: 39,
+};
+
 const createKey = (
     code: string,
     armenian: string,

@@ -1,0 +1,16 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(15,22) scale(1.1,1.1)"><path d="M 1.00,7.88
+           C 11.38,-2.88 15.00,-1.12 13.50,5.12
+             10.12,12.50 0.62,33.00 0.62,33.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.504165s ease-in-out; stroke-dasharray: 50.4165, 50.4165; stroke-dashoffset: 0;"></path><path d="M 10.62,11.38
+           C 20.75,-1.50 27.25,-2.75 25.00,5.12
+             23.75,8.25 15.88,23.50 14.00,27.62
+             11.25,34.25 16.25,35.75 24.25,25.75" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.669164s ease-in-out 0.554165s; stroke-dasharray: 66.9164, 66.9164; stroke-dashoffset: 0;"></path><path d="M 27.62,20.00
+           C 26.62,21.50 22.25,29.25 20.25,33.00
+             25.12,29.12 26.12,30.62 27.12,32.00
+             28.50,33.00 28.75,34.25 31.88,30.25" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.293063s ease-in-out 1.27333s; stroke-dasharray: 29.3063, 29.3063; stroke-dashoffset: 0;"></path><path d="M 41.50,20.00
+           C 41.50,20.00 36.38,30.62 35.38,33.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.143691s ease-in-out 1.61639s; stroke-dasharray: 14.3691, 14.3691; stroke-dashoffset: 0;"></path><path d="M 38.50,26.50
+           C 45.12,18.50 48.62,19.00 48.38,22.75
+             47.00,26.12 46.75,26.88 45.50,29.62
+             43.12,34.50 48.62,34.62 54.25,26.50" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.364745s ease-in-out 1.81008s; stroke-dasharray: 36.4745, 36.4745; stroke-dashoffset: 0;"></path><path d="M 57.25,20.00
+           C 57.25,20.00 52.88,30.25 51.62,33.00
+             53.62,30.75 55.25,30.25 57.38,31.50
+             60.25,33.00 59.62,34.25 63.12,30.62" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.278159s ease-in-out 2.22483s; stroke-dasharray: 27.8159, 27.8159; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

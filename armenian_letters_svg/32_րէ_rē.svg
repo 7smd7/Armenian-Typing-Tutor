@@ -1,0 +1,9 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(18,22) scale(1.1,1.1)"><path d="M 9.25,8.62
+           C 22.11,-4.34 25.50,-1.00 21.50,8.12
+             19.38,12.75 0.12,54.00 0.12,54.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.749594s ease-in-out; stroke-dasharray: 74.9594, 74.9594; stroke-dashoffset: 0;"></path><path d="M 19.75,11.38
+           C 28.62,-0.12 37.38,-4.12 33.88,5.62
+             31.88,10.50 25.00,23.88 23.88,26.00
+             20.12,33.00 24.25,37.62 34.12,24.88" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.681167s ease-in-out 0.799594s; stroke-dasharray: 68.1167, 68.1167; stroke-dashoffset: 0;"></path><path d="M 44.00,19.00
+           C 44.00,19.00 27.75,54.00 27.62,54.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.386445s ease-in-out 1.53076s; stroke-dasharray: 38.6445, 38.6445; stroke-dashoffset: 0;"></path><path d="M 39.62,28.00
+           C 48.00,19.00 55.38,14.62 50.25,25.88
+             43.62,39.12 55.12,30.38 57.25,25.88" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.410891s ease-in-out 1.96721s; stroke-dasharray: 41.0891, 41.0891; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

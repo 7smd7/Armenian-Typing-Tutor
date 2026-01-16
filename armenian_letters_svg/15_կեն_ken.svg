@@ -1,0 +1,8 @@
+<svg id="svg_pad" cursor="pointer" width="220px" height="220px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g style="opacity:1;" transform="translate(30,22) scale(1.1,1.1)"><path d="M 1.00,9.88
+           C 15.50,-5.88 14.38,3.25 13.12,5.25
+             13.12,5.25 5.00,22.25 3.50,25.62
+             -2.38,39.38 8.50,32.12 14.38,25.50" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.654805s ease-in-out; stroke-dasharray: 65.4805, 65.4805; stroke-dashoffset: 0;"></path><path d="M 16.50,21.00
+           C 16.50,21.00 1.38,53.75 1.38,53.75" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.360718s ease-in-out 0.704805s; stroke-dasharray: 36.0718, 36.0718; stroke-dashoffset: 0;"></path><path d="M 35.62,1.12
+           C 33.00,6.50 26.88,19.62 24.12,25.50
+             19.38,37.00 27.00,33.50 32.12,27.38" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.456029s ease-in-out 1.11552s; stroke-dasharray: 45.6029, 45.6029; stroke-dashoffset: 0;"></path><path d="M 35.25,21.00
+           C 33.62,24.38 22.88,48.00 20.50,54.00" fill="none" stroke="#fff" stroke-width="2" stroke-miterlimit="0" stroke-linecap="round" style="transition: stroke-dashoffset 0.361487s ease-in-out 1.62155s; stroke-dasharray: 36.1487, 36.1487; stroke-dashoffset: 0;"></path></g><line x1="5" y1="60" x2="95" y2="60" stroke="#fff" stroke-width="1px" stroke-linecap="round"></line></svg>

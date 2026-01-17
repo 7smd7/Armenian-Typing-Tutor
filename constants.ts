@@ -443,7 +443,7 @@ export const WOMAN_VOICE_MAP: Record<string, number> = {
 const createKey = (
     code: string,
     armenian: string,
-    shiftArmenian?: string
+    shiftArmenian?: string,
 ): KeyInfo => {
     const keyInfo: KeyInfo = {
         code,
@@ -512,7 +512,7 @@ export const KEYBOARD_LAYOUT: KeyboardLayout = [
         createKey("KeyB", "բ", "Բ"),
         createKey("KeyN", "ն", "Ն"),
         createKey("KeyM", "մ", "Մ"),
-        createKey("Comma", "՝", "«"),
+        createKey("Comma", ",", "«"),
         createKey("Period", "։", "»"),
         createKey("Slash", "/", "՞"),
         null,

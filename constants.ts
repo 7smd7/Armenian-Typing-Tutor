@@ -93,6 +93,15 @@ export const ARMENIAN_ALPHABET: Record<string, LetterInfo> = {
     "?": { armenian: "՞", transliteration: "?" },
     "!": { armenian: "!", transliteration: "!" },
     " ": { armenian: " ", transliteration: " " },
+    "։": { armenian: "։", transliteration: "." }, // Armenian full stop
+    "«": { armenian: "«", transliteration: "«" }, // Left guillemet
+    "»": { armenian: "»", transliteration: "»" }, // Right guillemet
+    "՚": { armenian: "՚", transliteration: "'" }, // Armenian apostrophe
+    "՞": { armenian: "՞", transliteration: "?" }, // Armenian question mark
+    "/": { armenian: "/", transliteration: "/" }, // Slash
+    "՝": { armenian: "՝", transliteration: "," }, // Armenian comma
+    "-": { armenian: "-", transliteration: "-" }, // Hyphen
+    "՞՚": { armenian: "՞՚", transliteration: "?'" }, // Question mark + apostrophe combo
 };
 
 export const SOUND_MAP: Record<string, string> = {
@@ -503,9 +512,9 @@ export const KEYBOARD_LAYOUT: KeyboardLayout = [
         createKey("KeyB", "բ", "Բ"),
         createKey("KeyN", "ն", "Ն"),
         createKey("KeyM", "մ", "Մ"),
-        createKey("Comma", "«", "»"),
-        createKey("Period", "»", "։"),
-        createKey("Slash", "։", "՚"),
+        createKey("Comma", "՝", "«"),
+        createKey("Period", "։", "»"),
+        createKey("Slash", "/", "՞"),
         null,
     ],
     [null],

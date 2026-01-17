@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -143,7 +143,8 @@
                     navigator.serviceWorker
                         .register("/sw.js")
                         .then((registration) => {
-                            console.log("SW registered: ", registration);
+                            // Debug: log registration in dev; use debug to avoid spamming console in production
+                            console.debug("SW registered:", registration);
 
                             // Check for updates every 30 seconds
                             setInterval(() => {
@@ -160,20 +161,20 @@
                                             // New service worker is active, reload the page
                                             if (
                                                 confirm(
-                                                    "New version available! Reload to update?"
+                                                    "New version available! Reload to update?",
                                                 )
                                             ) {
                                                 window.location.reload();
                                             }
                                         }
-                                    }
+                                    },
                                 );
                             });
                         })
                         .catch((registrationError) => {
-                            console.log(
-                                "SW registration failed: ",
-                                registrationError
+                            console.error(
+                                "SW registration failed:",
+                                registrationError,
                             );
                         });
 
@@ -182,7 +183,7 @@
                         "controllerchange",
                         () => {
                             window.location.reload();
-                        }
+                        },
                     );
                 });
             }

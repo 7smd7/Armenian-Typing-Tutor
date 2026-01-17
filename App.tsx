@@ -103,7 +103,7 @@ const App: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [showProgress, setShowProgress] = useState(false);
     const [voiceMode, setVoiceMode] = useState<"woman" | "human" | "computer">(
-        "woman"
+        "woman",
     );
     const [mobileInput, setMobileInput] = useState("");
     const [isMobile, setIsMobile] = useState(false);
@@ -175,7 +175,7 @@ const App: React.FC = () => {
                     audio.play().catch((error) => {
                         console.error(
                             `Failed to play woman voice audio for "${letterInfo.armenian}":`,
-                            error
+                            error,
                         );
                     });
                 }
@@ -189,7 +189,7 @@ const App: React.FC = () => {
                     audio.play().catch((error) => {
                         console.error(
                             `Failed to play human voice audio for "${letterInfo.armenian}":`,
-                            error
+                            error,
                         );
                     });
                 }
@@ -205,12 +205,12 @@ const App: React.FC = () => {
                     speechSynthesis.speak(utterance);
                 } else {
                     console.warn(
-                        `No phonetic pronunciation found for "${letterInfo.armenian}"`
+                        `No phonetic pronunciation found for "${letterInfo.armenian}"`,
                     );
                 }
             }
         },
-        [voiceMode]
+        [voiceMode],
     );
 
     const goToExercise = (lIdx: number, eIdx: number) => {
@@ -248,7 +248,7 @@ const App: React.FC = () => {
         const totalChars = currentLessonText.length;
         const incorrectChars = (Object.values(mistakes) as number[]).reduce(
             (sum, count) => sum + count,
-            0
+            0,
         );
 
         const tracker = getProgressTracker();
@@ -263,7 +263,7 @@ const App: React.FC = () => {
                 incorrectCharacters: incorrectChars,
                 timeSpent,
                 mistakes,
-            }
+            },
         );
     };
 
@@ -278,7 +278,7 @@ const App: React.FC = () => {
 
     const handleSelectExercise = (
         newLessonIndex: number,
-        newExerciseIndex: number
+        newExerciseIndex: number,
     ) => {
         goToExercise(newLessonIndex, newExerciseIndex);
         setIsMenuOpen(false);
@@ -340,8 +340,8 @@ const App: React.FC = () => {
             setIsMobile(
                 window.innerWidth < 768 ||
                     /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                        navigator.userAgent
-                    )
+                        navigator.userAgent,
+                    ),
             );
         };
 
@@ -353,9 +353,9 @@ const App: React.FC = () => {
     // PWA Install prompt handling
     useEffect(() => {
         const handleBeforeInstallPrompt = (e: Event) => {
-            // Prevent the mini-infobar from appearing on mobile
-            e.preventDefault();
             // Stash the event so it can be triggered later
+            // Note: we intentionally do NOT call e.preventDefault() here
+            // to avoid the browser warning about the banner not being shown.
             setDeferredPrompt(e);
             // Update UI to notify the user they can install the PWA
             setShowInstallButton(true);
@@ -369,14 +369,14 @@ const App: React.FC = () => {
 
         window.addEventListener(
             "beforeinstallprompt",
-            handleBeforeInstallPrompt
+            handleBeforeInstallPrompt,
         );
         window.addEventListener("appinstalled", handleAppInstalled);
 
         return () => {
             window.removeEventListener(
                 "beforeinstallprompt",
-                handleBeforeInstallPrompt
+                handleBeforeInstallPrompt,
             );
             window.removeEventListener("appinstalled", handleAppInstalled);
         };
@@ -447,7 +447,37 @@ const App: React.FC = () => {
             e.preventDefault();
 
             const expectedKeyCode = keyMap.get(currentArmenianChar);
-            if (!expectedKeyCode) return;
+
+            if (!expectedKeyCode) {
+                // Debug missing mapping for punctuation: log character and codepoint for diagnosis
+                try {
+                    const cp = currentArmenianChar
+                        ? `U+${currentArmenianChar.codePointAt(0)?.toString(16)}`
+                        : "N/A";
+                    // Only log in development to avoid noisy warnings in production
+                    if (
+                        (import.meta as any).env &&
+                        (import.meta as any).env.DEV
+                    ) {
+                        console.warn("Missing mapping for char:", {
+                            char: currentArmenianChar,
+                            codePoint: cp,
+                            keyMapHasChar: keyMap.has(currentArmenianChar),
+                        });
+                    }
+                } catch (err) {
+                    if (
+                        (import.meta as any).env &&
+                        (import.meta as any).env.DEV
+                    ) {
+                        console.warn(
+                            "Missing mapping for char (couldn't get codepoint):",
+                            currentArmenianChar,
+                        );
+                    }
+                }
+                return;
+            }
 
             // Check if the key code matches
             const keyMatches = e.code === expectedKeyCode;
@@ -692,15 +722,15 @@ const App: React.FC = () => {
                                                         LETTER_SVG_MAP[
                                                             currentLetterInfo
                                                                 .armenian
-                                                        ]
+                                                        ],
                                                     ).padStart(
                                                         2,
-                                                        "0"
+                                                        "0",
                                                     )}_${getSvgFileName(
                                                         LETTER_SVG_MAP[
                                                             currentLetterInfo
                                                                 .armenian
-                                                        ]
+                                                        ],
                                                     )}.svg`}
                                                     alt={`Handwriting for ${currentLetterInfo.armenian}`}
                                                     className='w-12 h-12 opacity-80'
@@ -772,8 +802,8 @@ const App: React.FC = () => {
                                         mobileInputStatus === "correct"
                                             ? "bg-green-600 border-2 border-green-400 ring-2 ring-green-500"
                                             : mobileInputStatus === "incorrect"
-                                            ? "bg-red-600 border-2 border-red-400 ring-2 ring-red-500 shake"
-                                            : "bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                              ? "bg-red-600 border-2 border-red-400 ring-2 ring-red-500 shake"
+                                              : "bg-gray-700 border border-gray-600 focus:ring-2 focus:ring-sky-500 focus:border-transparent"
                                     }`}
                                     autoFocus
                                 />
